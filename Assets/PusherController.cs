@@ -30,7 +30,7 @@ public class PusherController : MonoBehaviour
     public EnemyStats stats = new EnemyStats();
     float stepDelay = 1.5f;
     float timer = 0;
-    public float wallDistThresh = 4f;
+    public float wallDistThresh = 1f;
     public float pcDistThresh = 4f;
     public float stepSize = 1;
 
@@ -75,11 +75,14 @@ public class PusherController : MonoBehaviour
                         }
                         // Hitting a wall? Turn around
                         // Debug.Log( Vector2.Distance(hit.collider.transform.position, transform.position) );
-                        
-                        if( Vector2.Distance(hit.collider.transform.position, transform.position) <= wallDistThresh){
+                        Debug.Log(hit.distance);
+                        if( hit.distance <= wallDistThresh){
+                            Debug.Log("Turn");
                         // if(hit.collider.tag == "Walls" && Vector2.Distance(hit.collider.transform.position, transform.position) <= wallDistThresh){
-                            
+                            moving = false;
+                            timer = 0;
 travelDir = -travelDir;
+targetPos = (Vector2)transform.position + travelDir * stepSize;
                         } 
                     }
                      if (timer > stepDelay && !moving){

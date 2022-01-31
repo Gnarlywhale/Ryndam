@@ -9746,12 +9746,12 @@ PrefabInstance:
     - target: {fileID: 3876833202335347372, guid: 572678b7b417fd84db643f4f7fe4e579,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.28146887
+      value: -20.13
       objectReference: {fileID: 0}
     - target: {fileID: 3876833202335347372, guid: 572678b7b417fd84db643f4f7fe4e579,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.042303532
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 3876833202335347372, guid: 572678b7b417fd84db643f4f7fe4e579,
         type: 3}
@@ -40118,7 +40118,7 @@ GameObject:
   - component: {fileID: 1288420366}
   - component: {fileID: 1288420365}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Soundtrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40138,8 +40138,8 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
-  Mute: 1
+  Loop: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

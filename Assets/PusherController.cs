@@ -76,7 +76,8 @@ public class PusherController : MonoBehaviour
                         // Hitting a wall? Turn around
                         // Debug.Log( Vector2.Distance(hit.collider.transform.position, transform.position) );
                         
-                        if(hit.collider.tag == "Terrain" && Vector2.Distance(hit.collider.transform.position, transform.position) <= wallDistThresh){
+                        if( Vector2.Distance(hit.collider.transform.position, transform.position) <= wallDistThresh){
+                        // if(hit.collider.tag == "Walls" && Vector2.Distance(hit.collider.transform.position, transform.position) <= wallDistThresh){
                             
 travelDir = -travelDir;
                         } 

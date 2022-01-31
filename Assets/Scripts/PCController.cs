@@ -5,28 +5,54 @@ using UnityEngine;
 
 public class PCController : MonoBehaviour
 {
-    
+    public class PlayerStats{
+        public int maxHealth = 100;
+        private int _curHealth;
+        public int curHealth{
+            get { return _curHealth;}
+            set { _curHealth = Mathf.Clamp(value, 0, maxHealth);}
+        }
+        public void Init(){
+            curHealth = maxHealth;
+        }
+
+    }
+    public PlayerStats stats = new PlayerStats();
     public int assignedMB = 0;
     public float speed;
     private bool moving = false;
     private bool onPath = false;
 
-    public float health = 100f;
+    
 
     public Rigidbody2D rb;
     public Camera cam;
     Vector2 mousePos;
     List<Vector2> trackedPath = new List<Vector2>();
+    [SerializeField]
+    private StatusIndicator statusIndicator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        stats.Init();
+        if (statusIndicator == null) {
+            Debug.LogError("No status indicator referenced on "+gameObject.name);
+        }else {
+            statusIndicator.SetHealth(stats.curHealth, stats.maxHealth);
+        }
     }
     private void OnCollisionEnter2D(Collision2D other) {
         Debug.Log("Collison");
         if(other.gameObject.name != "Right" && other.gameObject.tag != "PCProjectile"){
             moving = false;
             onPath = false;
+        }
+    }
+    public void DamagePlayer(int damage){
+        stats.curHealth -= damage;
+        if (stats.curHealth <= 0){
+            GameMaster.KillPlayer(this);
+            // Handle player death somehow?
         }
     }
     void FixedUpdate() {

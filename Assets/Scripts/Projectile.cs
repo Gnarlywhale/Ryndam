@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     private Vector2 startPos;
     public float arcHeight = 1;
     public int arcDir;
+    public float damage;
 private Vector3 _initialPosition;
 private List<Vector3> _allPositions;
 private int _counter;
@@ -135,7 +136,13 @@ private Vector3 CubicCurve(Vector3 start, Vector3 control1, Vector3 control2, Ve
 		return Quaternion.Euler(0, 0, Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg);
 	}
      private void OnCollisionEnter2D(Collision2D other) {
+         Debug.Log("Collision");
          if (other.gameObject.tag != "Player" && other.gameObject.tag != "PCProjectile"){
+             if (other.gameObject.tag == "Enemy"){
+                 PusherController pusher = other.gameObject.GetComponent<PusherController>();
+                 Debug.Log("I hit "+gameObject.name+" for "+damage);
+                 pusher.DamagePusher(damage);
+             }
 Destroy(gameObject);
          }
          

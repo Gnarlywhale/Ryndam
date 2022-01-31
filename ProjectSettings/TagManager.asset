@@ -7,6 +7,7 @@ TagManager:
   - PCProjectile
   - Weapon
   - Terrain
+  - Enemy
   layers:
   - Default
   - TransparentFX

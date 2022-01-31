@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class PusherController : MonoBehaviour
 {
+    public class EnemyStats{
+        public float maxHealth = 100;
+        private float _curHealth;
+        public float curHealth{
+            get { return _curHealth;}
+            set { _curHealth = Mathf.Clamp(value, 0, maxHealth);}
+        }
+        public void Init(){
+            curHealth = maxHealth;
+        }
+
+    }
+     public void DamagePusher(float damage){
+        stats.curHealth -= damage;
+        statusIndicator.SetHealth(stats.curHealth, stats.maxHealth);
+        if (stats.curHealth <= 0){
+            // kill the unit
+            GameMaster.KillEnemy(gameObject);
+        }
+    }
+
+    [SerializeField]
+    private StatusIndicator statusIndicator;
+    public EnemyStats stats = new EnemyStats();
     float stepDelay = 1.5f;
     float timer = 0;
     public float wallDistThresh = 4f;
@@ -19,7 +43,12 @@ public class PusherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        stats.Init();
+        if (statusIndicator == null) {
+            Debug.LogError("No status indicator referenced on "+gameObject.name);
+        }else {
+            statusIndicator.SetHealth(stats.curHealth, stats.maxHealth);
+        }
     }
 
     // Update is called once per frame

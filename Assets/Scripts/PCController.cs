@@ -22,6 +22,7 @@ public class PCController : MonoBehaviour
     public float speed;
     private bool moving = false;
     private bool onPath = false;
+    private bool lookingRight = true;
 
     
 
@@ -43,7 +44,7 @@ public class PCController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other) {
         Debug.Log("Collison");
-        if(other.gameObject.name != "Right" && other.gameObject.tag != "PCProjectile"){
+        if(other.gameObject.name != "Right" && other.gameObject.tag != "PCProjectile" && other.gameObject.tag != "Player"){
             moving = false;
             onPath = false;
         }
@@ -57,8 +58,19 @@ public class PCController : MonoBehaviour
     }
     void FixedUpdate() {
         Vector2 lookDir = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
+        //float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+        //rb.rotation = angle;
+        if (lookDir.x < 0 && lookingRight)
+        {
+            lookingRight = false;
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+        if (lookDir.x > 0 && !lookingRight)
+        {
+            lookingRight = true;
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        //transform.localRotation = Quaternion.Euler(0, 180, 0);
         if (moving && trackedPath.Count > 0 ){
         // Travel to start location
         float step = speed * Time.deltaTime;
